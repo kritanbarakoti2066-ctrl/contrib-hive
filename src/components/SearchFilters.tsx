@@ -80,83 +80,84 @@ const SearchFilters = ({ onSearch, onFilterChange }: SearchFiltersProps) => {
   );
 
   return (
-    <div className="bg-card border rounded-lg p-6 space-y-6">
+    <div className="bg-gradient-to-r from-card/80 to-card border rounded-2xl p-8 space-y-8 backdrop-blur-sm">
       {/* Search Bar */}
-      <form onSubmit={handleSearch} className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <form onSubmit={handleSearch} className="relative group">
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
         <Input
           placeholder="Search projects, issues, or technologies..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10 pr-4"
+          className="pl-12 pr-4 h-14 text-lg border-2 bg-background/50 focus:bg-background transition-all duration-300 rounded-xl"
         />
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 to-accent/20 opacity-0 group-focus-within:opacity-100 transition-opacity -z-10 blur-xl"></div>
       </form>
 
       {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Select value={filters.category} onValueChange={(value) => updateFilter('category', value)}>
-          <SelectTrigger>
+          <SelectTrigger className="h-12 border-2 bg-background/50 hover:bg-background transition-all duration-300 rounded-xl">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="rounded-xl">
             {categories.map(category => (
-              <SelectItem key={category} value={category}>{category}</SelectItem>
+              <SelectItem key={category} value={category} className="rounded-lg">{category}</SelectItem>
             ))}
           </SelectContent>
         </Select>
 
         <Select value={filters.difficulty} onValueChange={(value) => updateFilter('difficulty', value)}>
-          <SelectTrigger>
+          <SelectTrigger className="h-12 border-2 bg-background/50 hover:bg-background transition-all duration-300 rounded-xl">
             <SelectValue placeholder="Difficulty" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="Beginner">Beginner</SelectItem>
-            <SelectItem value="Intermediate">Intermediate</SelectItem>
-            <SelectItem value="Advanced">Advanced</SelectItem>
+          <SelectContent className="rounded-xl">
+            <SelectItem value="Beginner" className="rounded-lg">Beginner</SelectItem>
+            <SelectItem value="Intermediate" className="rounded-lg">Intermediate</SelectItem>
+            <SelectItem value="Advanced" className="rounded-lg">Advanced</SelectItem>
           </SelectContent>
         </Select>
 
         <Select value={filters.issueType} onValueChange={(value) => updateFilter('issueType', value)}>
-          <SelectTrigger>
+          <SelectTrigger className="h-12 border-2 bg-background/50 hover:bg-background transition-all duration-300 rounded-xl">
             <SelectValue placeholder="Issue Type" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="good-first-issue">Good First Issue</SelectItem>
-            <SelectItem value="help-wanted">Help Wanted</SelectItem>
-            <SelectItem value="bug">Bug Fix</SelectItem>
-            <SelectItem value="feature">Feature Request</SelectItem>
-            <SelectItem value="documentation">Documentation</SelectItem>
+          <SelectContent className="rounded-xl">
+            <SelectItem value="good-first-issue" className="rounded-lg">Good First Issue</SelectItem>
+            <SelectItem value="help-wanted" className="rounded-lg">Help Wanted</SelectItem>
+            <SelectItem value="bug" className="rounded-lg">Bug Fix</SelectItem>
+            <SelectItem value="feature" className="rounded-lg">Feature Request</SelectItem>
+            <SelectItem value="documentation" className="rounded-lg">Documentation</SelectItem>
           </SelectContent>
         </Select>
 
         <Select value={filters.language} onValueChange={(value) => updateFilter('language', value)}>
-          <SelectTrigger>
+          <SelectTrigger className="h-12 border-2 bg-background/50 hover:bg-background transition-all duration-300 rounded-xl">
             <SelectValue placeholder="Language" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="javascript">JavaScript</SelectItem>
-            <SelectItem value="typescript">TypeScript</SelectItem>
-            <SelectItem value="python">Python</SelectItem>
-            <SelectItem value="java">Java</SelectItem>
-            <SelectItem value="go">Go</SelectItem>
-            <SelectItem value="rust">Rust</SelectItem>
+          <SelectContent className="rounded-xl">
+            <SelectItem value="javascript" className="rounded-lg">JavaScript</SelectItem>
+            <SelectItem value="typescript" className="rounded-lg">TypeScript</SelectItem>
+            <SelectItem value="python" className="rounded-lg">Python</SelectItem>
+            <SelectItem value="java" className="rounded-lg">Java</SelectItem>
+            <SelectItem value="go" className="rounded-lg">Go</SelectItem>
+            <SelectItem value="rust" className="rounded-lg">Rust</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       {/* Tech Stack Tags */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-muted-foreground" />
-          <span className="text-sm font-medium">Tech Stack</span>
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <Filter className="h-5 w-5 text-muted-foreground" />
+          <span className="text-lg font-semibold">Tech Stack</span>
         </div>
         
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-3">
           {techStacks.map(tech => (
             <Badge
               key={tech}
               variant={filters.techStack.includes(tech) ? "default" : "outline"}
-              className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+              className="cursor-pointer hover:scale-105 transition-all duration-200 px-4 py-2 text-sm font-medium rounded-lg border-2"
               onClick={() => filters.techStack.includes(tech) ? removeTechStack(tech) : addTechStack(tech)}
             >
               {tech}
@@ -167,13 +168,13 @@ const SearchFilters = ({ onSearch, onFilterChange }: SearchFiltersProps) => {
 
       {/* Active Filters Display */}
       {hasActiveFilters && (
-        <div className="flex items-center justify-between pt-4 border-t">
+        <div className="flex items-center justify-between pt-6 border-t-2 border-border/50">
           <div className="flex flex-wrap gap-2">
             {filters.techStack.map(tech => (
-              <Badge key={tech} variant="secondary" className="gap-1">
+              <Badge key={tech} variant="secondary" className="gap-2 px-3 py-1 rounded-lg">
                 {tech}
                 <X 
-                  className="h-3 w-3 cursor-pointer hover:text-destructive" 
+                  className="h-3 w-3 cursor-pointer hover:text-destructive transition-colors" 
                   onClick={() => removeTechStack(tech)}
                 />
               </Badge>
@@ -183,7 +184,7 @@ const SearchFilters = ({ onSearch, onFilterChange }: SearchFiltersProps) => {
             variant="ghost" 
             size="sm" 
             onClick={clearAllFilters}
-            className="text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 rounded-lg"
           >
             Clear All
           </Button>

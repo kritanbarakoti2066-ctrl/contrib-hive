@@ -39,87 +39,87 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   };
 
   return (
-    <Card className="card-hover group cursor-pointer">
-      <CardHeader className="pb-3">
+    <Card className="group card-hover cursor-pointer overflow-hidden border-2 border-transparent hover:border-primary/20 transition-all duration-300 bg-gradient-to-br from-card to-card/80">
+      <CardHeader className="pb-4">
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
+            <h3 className="text-xl font-bold group-hover:text-primary transition-colors duration-300 mb-2">
               {project.name}
             </h3>
-            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+            <p className="text-muted-foreground leading-relaxed line-clamp-2">
               {project.description}
             </p>
           </div>
-          <div className="flex items-center gap-1 text-sm text-muted-foreground ml-4">
-            <div className={`w-2 h-2 rounded-full ${getHealthColor(project.healthScore)} bg-current`} />
-            <span className={getHealthColor(project.healthScore)}>{project.healthScore}%</span>
+          <div className="flex items-center gap-2 ml-4 px-3 py-1 rounded-full bg-muted/50">
+            <div className={`w-2 h-2 rounded-full ${getHealthColor(project.healthScore)} bg-current animate-pulse`} />
+            <span className={`${getHealthColor(project.healthScore)} text-sm font-medium`}>{project.healthScore}%</span>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className="py-3">
+      <CardContent className="py-4 space-y-6">
         {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2">
           {project.techStack.slice(0, 4).map((tech, index) => (
-            <Badge key={index} variant="secondary" className="tech-badge">
+            <Badge key={index} variant="secondary" className="tech-badge px-3 py-1 font-medium rounded-lg hover:scale-105 transition-transform duration-200">
               {tech}
             </Badge>
           ))}
           {project.techStack.length > 4 && (
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-xs px-2 py-1 rounded-lg border-dashed">
               +{project.techStack.length - 4} more
             </Badge>
           )}
         </div>
 
         {/* Project Stats */}
-        <div className="grid grid-cols-3 gap-4 text-sm text-muted-foreground mb-4">
-          <div className="flex items-center gap-1">
-            <Star className="h-4 w-4" />
-            <span>{project.stars.toLocaleString()}</span>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="flex items-center gap-2 p-3 bg-muted/30 rounded-lg">
+            <Star className="h-4 w-4 text-warning" />
+            <span className="font-medium">{project.stars.toLocaleString()}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <GitFork className="h-4 w-4" />
-            <span>{project.forks.toLocaleString()}</span>
+          <div className="flex items-center gap-2 p-3 bg-muted/30 rounded-lg">
+            <GitFork className="h-4 w-4 text-primary" />
+            <span className="font-medium">{project.forks.toLocaleString()}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <Users className="h-4 w-4" />
-            <span>{project.contributors}</span>
+          <div className="flex items-center gap-2 p-3 bg-muted/30 rounded-lg">
+            <Users className="h-4 w-4 text-accent" />
+            <span className="font-medium">{project.contributors}</span>
           </div>
         </div>
 
         {/* Issue Tags */}
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2">
           {project.goodFirstIssues > 0 && (
-            <Badge className="issue-good-first text-success">
+            <Badge className="issue-good-first text-success px-3 py-1 rounded-lg font-medium">
               {project.goodFirstIssues} Good First Issues
             </Badge>
           )}
           {project.helpWantedIssues > 0 && (
-            <Badge className="issue-help-wanted text-warning">
+            <Badge className="issue-help-wanted text-warning px-3 py-1 rounded-lg font-medium">
               {project.helpWantedIssues} Help Wanted
             </Badge>
           )}
-          <Badge className={getDifficultyColor(project.difficulty)}>
+          <Badge className={`${getDifficultyColor(project.difficulty)} px-3 py-1 rounded-lg font-medium`}>
             {project.difficulty}
           </Badge>
         </div>
 
         {/* Last Updated */}
-        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-          <Clock className="h-3 w-3" />
+        <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2 border-t border-border/50">
+          <Clock className="h-4 w-4" />
           <span>Updated {project.lastUpdated}</span>
         </div>
       </CardContent>
 
-      <CardFooter className="pt-3">
-        <div className="flex w-full gap-2">
-          <Button variant="outline" className="flex-1">
+      <CardFooter className="pt-4 bg-muted/20 border-t">
+        <div className="flex w-full gap-3">
+          <Button variant="outline" className="flex-1 hover:bg-muted transition-all duration-200 rounded-lg">
             View Issues
           </Button>
-          <Button className="flex-1 group">
+          <Button className="flex-1 group/btn hover:scale-105 transition-all duration-200 rounded-lg">
             <span>Contribute</span>
-            <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <ExternalLink className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
           </Button>
         </div>
       </CardFooter>

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import SearchFilters from "@/components/SearchFilters";
 import ProjectGrid from "@/components/ProjectGrid";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Users, Code2, Heart } from "lucide-react";
+import { TrendingUp, Users, Code2, Heart, ArrowRight, Sparkles } from "lucide-react";
 
 interface FilterState {
   category: string;
@@ -180,26 +181,38 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <HeroSection />
       
       {/* Categories Section */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-20 bg-gradient-to-br from-muted/50 to-accent/5" id="categories">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Explore by Category</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+          <div className="text-center mb-16">
+            <Badge className="mb-4 bg-primary/10 text-primary hover:bg-primary/20">
+              <Sparkles className="w-3 h-3 mr-1" />
+              Popular Categories
+            </Badge>
+            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+              Explore by Category
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Discover projects across different domains and find the perfect match for your skills and interests.
+              Join thousands of contributors making a difference.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {featuredCategories.map((category, index) => (
-              <div key={index} className="bg-card p-6 rounded-lg border card-hover cursor-pointer">
-                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 ${category.color}`}>
-                  <category.icon className="h-6 w-6" />
+              <div key={index} className="group bg-card p-8 rounded-xl border-2 border-transparent hover:border-primary/20 card-hover cursor-pointer transition-all duration-300">
+                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl mb-6 ${category.color} group-hover:scale-110 transition-transform duration-300`}>
+                  <category.icon className="h-8 w-8" />
                 </div>
-                <h3 className="font-semibold mb-2">{category.name}</h3>
-                <p className="text-sm text-muted-foreground">{category.count}</p>
+                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{category.name}</h3>
+                <p className="text-muted-foreground mb-4">{category.count}</p>
+                <div className="flex items-center text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span>Explore projects</span>
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
             ))}
           </div>
@@ -207,30 +220,41 @@ const Index = () => {
       </section>
 
       {/* Projects Discovery Section */}
-      <section className="py-16">
+      <section className="py-20" id="projects">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Discover Projects</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+          <div className="text-center mb-16">
+            <Badge className="mb-4 bg-accent/10 text-accent hover:bg-accent/20">
+              <Code2 className="w-3 h-3 mr-1" />
+              Project Discovery
+            </Badge>
+            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+              Discover Amazing Projects
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Find open source projects that match your skills and interests. Filter by technology, difficulty, and contribution type.
+              Start your contribution journey today.
             </p>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-12">
             <SearchFilters onSearch={handleSearch} onFilterChange={handleFilterChange} />
             
             {/* Results Header */}
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-card/50 p-6 rounded-xl border">
               <div className="flex items-center gap-4">
-                <h3 className="text-lg font-semibold">
+                <h3 className="text-xl font-bold">
                   {projects.length} Projects Found
                 </h3>
                 {(searchQuery || Object.values(filters).some(v => Array.isArray(v) ? v.length > 0 : v !== "")) && (
-                  <Badge variant="secondary">Filtered Results</Badge>
+                  <Badge variant="secondary" className="animate-pulse">
+                    <Sparkles className="w-3 h-3 mr-1" />
+                    Filtered Results
+                  </Badge>
                 )}
               </div>
-              <div className="text-sm text-muted-foreground">
-                Sorted by relevance
+              <div className="text-sm text-muted-foreground flex items-center gap-2">
+                <TrendingUp className="h-4 w-4" />
+                Sorted by relevance & activity
               </div>
             </div>
 
